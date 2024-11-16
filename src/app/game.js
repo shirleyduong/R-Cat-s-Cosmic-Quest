@@ -35,22 +35,40 @@ const Game = () => {
             let cellClass = '';
             switch (cell) {
               case 0:
-                cellClass = 'bg-green-500';
+                cellClass = '/catClosed.png';
                 break;
               case 1:
-                cellClass = 'bg-yellow-300';
+                cellClass = '/starOpen.png';
                 break;
               case 2:
-                cellClass = 'bg-orange-400';
+                cellClass = '✦';
                 break;
               case 3:
-                cellClass = 'bg-gray-800';
+                cellClass = 'bg-purple-300';
                 break;
               case 4:
-                cellClass = 'bg-blue-500';
+                cellClass = '/rocket7.png';
                 break;
+              case 5:
+                cellClass = '/rocket1.png';
+                break;
+              case 6:
+                cellClass = '/rocket2.png';
+                break;
+              case 7:
+                cellClass = '/rocket3.png';
+                break;
+              case 8:
+                cellClass = '/rocket4.png';
+                break;
+              case 9:
+                cellClass = '/rocket5.png';
+                break;
+              case 10:
+                cellClass = '/rocket6.png';
+                break;                
               case 11:
-                cellClass = 'bg-red-500';
+                cellClass = '/asteroid.png';
                 break;
               default:
                 break;
