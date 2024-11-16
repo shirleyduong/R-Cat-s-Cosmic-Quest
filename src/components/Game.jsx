@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import asteroid from "../../public/asteroid.png"
 import catClosed from "../../public/catClosed.png"
@@ -39,74 +39,111 @@ const initialWorld = [
 ];
 
 const Game = () => {
-    const [world, setWorld] = useState(initialWorld);
-    const [rCat, setRCat] = useState({ x: 1, y: 1 });
-    const [score, setScore] = useState(0);
-  
-    const renderTile = (tile, rowIndex, colIndex) => {
-      const tileMap = {
-        1: star2,
-        2: catClosed,
-        4: rocket1,
-        5: rocket2,
-        6: rocket3,
-        7: rocket4,
-        8: rocket5,
-        9: rocket6,
-        10: rocket7,
-        11: asteroid,
-      };
-  
-      if (tile === 3) {
-        return (
-          <div
-            key={`${rowIndex}-${colIndex}`}
-            className="w-4 h-4 bg-cats-purple-300"
-          />
-        );
+  const [world, setWorld] = useState(initialWorld);
+  const [rCat, setRCat] = useState({ x: 1, y: 1 });
+  const [score, setScore] = useState(0);
+
+  const tileMap = {
+    1: star1,
+    2: star2,
+    4: rocket1,
+    5: rocket2,
+    6: rocket3,
+    7: rocket4,
+    8: rocket5,
+    9: rocket6,
+    10: rocket7,
+    11: asteroid,
+  };
+
+  const handleKeyPress = (event) => {
+    const { x, y } = rCat;
+    let newX = x;
+    let newY = y;
+
+    if (event.key === "ArrowUp") newY = Math.max(0, y - 1); // Move up
+    if (event.key === "ArrowDown") newY = Math.min(world.length - 1, y + 1); // Move down
+    if (event.key === "ArrowLeft") newX = Math.max(0, x - 1); // Move left
+    if (event.key === "ArrowRight") newX = Math.min(world[0].length - 1, x + 1); // Move right
+
+    const tile = world[newY][newX];
+
+    // Only move the cat if the new tile is not a wall (e.g., tile 3) or out of bounds
+    if (tile !== 3) {
+      setRCat({ x: newX, y: newY });
+
+      // Update score if the cat eats something (e.g., star)
+      if (tile === 1 || tile === 2) {
+        setScore((prevScore) => prevScore + 10); // Increment score by 10 for stars
       }
-  
-      const tileImage = tileMap[tile];
-  
-      return (
-        <div key={`${rowIndex}-${colIndex}`} className="w-4 h-3">
-          {tileImage && (
-            <Image
-              src={tileImage}
-              alt={`Tile ${tile}`}
-              className="w-[10px] h-[10px]"
-            />
-          )}
-        </div>
-      );
+
+      // Optionally, set the tile to 0 (empty) once the cat eats it
+      if (tile === 1 || tile === 2) {
+        const newWorld = [...world];
+        newWorld[newY][newX] = 0; // Replace star with empty space
+        setWorld(newWorld);
+      }
+    }
+  };
+
+  // Add event listener for key press
+  useEffect(() => {
+    const onKeyDown = (event) => handleKeyPress(event);
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
     };
-  
-    const renderWorld = () =>
-      world.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex">
-          {row.map((tile, colIndex) => renderTile(tile, rowIndex, colIndex))}
-        </div>
-      ));
-  
+  }, [rCat, world]); // Dependencies to re-setup event listener when necessary
+
+  const renderTile = (tile, rowIndex, colIndex) => {
+    if (tile === 3) {
+      return (
+        <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-gray-800" />
+      );
+    }
+
+    const tileImage = tileMap[tile];
+
     return (
-      <div className="flex flex-col items-center space-y-4">
-        <div id="world" className="grid gap-1">
-          {renderWorld()}
-        </div>
-        <div
-          id="rCat"
-          className="absolute"
-          style={{
-            top: `${rCat.y * 20}px`,
-            left: `${rCat.x * 20}px`,
-            width: "20px",
-            height: "20px",
-          }}
-        >
-          <Image src={catOpen} alt="RCat" className="w-full h-full" />
-        </div>
+      <div key={`${rowIndex}-${colIndex}`} className="w-4 h-3">
+        {tileImage && (
+          <Image
+            src={tileImage}
+            alt={`Tile ${tile}`}
+            className="w-[10px] h-[10px]"
+          />
+        )}
       </div>
     );
   };
-  
-  export default Game;
+
+  const renderWorld = () =>
+    world.map((row, rowIndex) => (
+      <div key={rowIndex} className="flex">
+        {row.map((tile, colIndex) => renderTile(tile, rowIndex, colIndex))}
+      </div>
+    ));
+
+  return (
+    <div className="flex flex-col items-center space-y-4">
+      <div id="world" className="grid gap-1">
+        {renderWorld()}
+      </div>
+      <div
+        id="rCat"
+        className="absolute"
+        style={{
+          top: `${rCat.y * 20}px`,
+          left: `${rCat.x * 20}px`,
+          width: "20px",
+          height: "20px",
+        }}
+      >
+        <Image src={catOpen} alt="RCat" className="w-full h-full" />
+      </div>
+    </div>
+  );
+};
+
+export default Game;
