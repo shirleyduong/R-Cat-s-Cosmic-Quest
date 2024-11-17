@@ -107,9 +107,29 @@ const Game = ({ score, setScore }) => {
 
   const renderTile = (tile, rowIndex, colIndex) => {
     if (tile === 3) {
-      return (
-        <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300" />
-      );
+        if(rowIndex === 0 && colIndex === 0){
+            return (
+                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300 rounded-tl" />
+            );
+        }else if(rowIndex === 0 && colIndex === 21){
+            return (
+                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300 rounded-tr" />
+            );
+        }else if(rowIndex === 20 && colIndex === 0){
+            return (
+                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300 rounded-bl" />
+            );
+        }else if(rowIndex === 20 && colIndex === 21){
+            return (
+                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300 rounded-br" />
+            );
+        }
+        else{
+            return (
+                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300" />
+              );
+        }
+      
     }
     
 
