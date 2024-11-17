@@ -15,6 +15,8 @@ const animations = {
 
 const Content = () => {
   const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+
 
   return (
     <div className="relative h-[70vh] bg-cats-blue-100 flex items-center text-white">
@@ -34,7 +36,7 @@ const Content = () => {
       <div className="grid grid-cols-2 px-[10vw] py-[6vh] gap-[10vw] z-10">
         {/* Game Component */}
         <div>
-          <Game score={score} setScore={setScore} />
+          <Game score={score} setScore={setScore} gameOver={gameOver} setGameOver={setGameOver} />
         </div>
 
         {/* Information Section */}
@@ -77,6 +79,16 @@ const Content = () => {
           </div>
         </div>
       </div>
+      {gameOver && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+          <div className="relative bg-white rounded-lg text-center px-8 py-6 shadow-lg">
+            <h2 className="text-2xl font-bold text-black mb-4">Game Over</h2>
+            <p className="text-gray-700 mb-6">
+              Oh no! You weren&apos;t able to collect all the debris.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -38,10 +38,9 @@ const initialWorld = [
     [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
 ];
 
-const Game = ({ score, setScore }) => {
+const Game = ({ score, setScore, gameOver, setGameOver }) => {
   const [world, setWorld] = useState(initialWorld);
   const [rCat, setRCat] = useState({ x: 1, y: 1 });
-  const [gameOver, setGameOver] = useState(false);
 
   const tileMap = {
     1: star1,
@@ -135,7 +134,7 @@ const Game = ({ score, setScore }) => {
           <Image
             src={tileImage}
             alt={`Tile ${tile}`}
-            className="w-[15px] h-[15px]"
+            className="w-[10px] h-[10px]"
           />
         )}
       </div>
