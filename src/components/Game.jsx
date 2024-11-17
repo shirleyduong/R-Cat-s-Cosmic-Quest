@@ -62,8 +62,6 @@ const Game = ({ score, setScore }) => {
     if (gameOver) return;
 
     const { x, y } = rCat;
-    let oldX = x;
-    let oldY = y;
     let newX = x;
     let newY = y;
 
@@ -80,19 +78,18 @@ const Game = ({ score, setScore }) => {
     }
 
     if (tile !== 3) {
+      world[y][x] = 0;
+      world[newY][newX] = 12;
+
       setRCat({ x: newX, y: newY });
 
       if(tile === 1 || tile === 2){
         setScore(score + 10);
       }
 
-      if (tile >= 4 || tile <= 10) {
+      if (tile >= 4 && tile <= 10) {
         setScore(score + 30);
       }
-
-      world[oldY][oldX] = 0;
-      world[newY][newX] = 12;
-
     }
   };
 
@@ -103,7 +100,7 @@ const Game = ({ score, setScore }) => {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [rCat, world, gameOver]); // Dependencies to re-setup event listener when necessary
+  }, [rCat, world, gameOver]);
 
   const renderTile = (tile, rowIndex, colIndex) => {
     if (tile === 3) {
@@ -111,7 +108,6 @@ const Game = ({ score, setScore }) => {
         <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300" />
       );
     }
-    
 
     const tileImage = tileMap[tile];
 

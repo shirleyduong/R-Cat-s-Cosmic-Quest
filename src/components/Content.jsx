@@ -4,6 +4,7 @@ import Image from 'next/image'
 import temp from "../../public/temp.svg"
 import rocket from "../../public/rocket.svg"
 import Game from './Game'
+
 const Content = () => {
     const [score, setScore] = useState(0);
 
@@ -17,12 +18,14 @@ const Content = () => {
             <div className='grid grid-cols-2 gap-[4vw]'>
                 <div>
                     <div className='p-1 border-2 rounded-2xl border-cats-purple-300'>
-                        <div className='border-4 border-cats-purple-300 rounded-2xl p-2'>
-                            LITTER <br/> CLEANED: {score}
+                        <div className='flex flex-row border-4 border-cats-purple-300 rounded-2xl p-2'>
+                            <p>
+                                LITTER <br/> CLEANED: 
+                            </p>
+                            <div className='text-2xl self-center ml-16'>
+                                {score}
+                            </div>
                         </div>
-                    </div>
-                    <div className=' flex justify-center items-center px-4 py-2 mt-4 rounded-full border-4 border-cats-purple-300'>
-                        PLAY AGAIN
                     </div>
                 </div>
                 <div className='flex flex-col justify-center items-center text-center'>
