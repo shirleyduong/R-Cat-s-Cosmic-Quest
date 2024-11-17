@@ -134,7 +134,7 @@ const Game = ({ score, setScore, gameOver, setGameOver }) => {
           <Image
             src={tileImage}
             alt={`Tile ${tile}`}
-            className="w-[10px] h-[10px]"
+            className="w-[15px] h-[15px]"
           />
         )}
       </div>
