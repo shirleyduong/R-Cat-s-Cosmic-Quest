@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       colors: {
         cats:{
+          "blue-100": "#081434",
           "purple-100": "#1D0933",
           "purple-200": "#27178E",
           "purple-300": "#7023C3",
