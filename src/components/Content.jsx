@@ -1,21 +1,24 @@
-import React from 'react'
+"use client"
+import { useState } from "react";
 import Image from 'next/image'
 import temp from "../../public/temp.svg"
 import rocket from "../../public/rocket.svg"
 import Game from './Game'
 const Content = () => {
+    const [score, setScore] = useState(0);
+
   return (
     <div className='h-[74vh] bg-black flex items-center text-white'>
       <div className='grid grid-cols-2 px-[10vw] py-[6vh] gap-[10vw]'>
         <div>
-            <Game/>
+            <Game score={score} setScore={setScore} />
         </div>
         <div className='grid grid-rows-2'>
             <div className='grid grid-cols-2 gap-[4vw]'>
                 <div>
                     <div className='p-1 border-2 rounded-2xl border-cats-purple-300'>
                         <div className='border-4 border-cats-purple-300 rounded-2xl p-2'>
-                            LITTER <br/> CLEANED:
+                            LITTER <br/> CLEANED: {score}
                         </div>
                     </div>
                     <div className=' flex justify-center items-center px-4 py-2 mt-4 rounded-full border-4 border-cats-purple-300'>

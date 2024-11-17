@@ -38,10 +38,9 @@ const initialWorld = [
     [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
 ];
 
-const Game = () => {
+const Game = ({ score, setScore }) => {
   const [world, setWorld] = useState(initialWorld);
   const [rCat, setRCat] = useState({ x: 1, y: 1 });
-  const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
 
   const tileMap = {
@@ -59,7 +58,7 @@ const Game = () => {
 
   const handleKeyPress = (event) => {
     if (gameOver) return;
-    
+
     const { x, y } = rCat;
     let newX = x;
     let newY = y;
@@ -82,11 +81,11 @@ const Game = () => {
 
       // Update score if the cat eats something (e.g., star)
       if (tile === 1 || tile === 2) {
-        setScore((prevScore) => prevScore + 10); // Increment score by 10 for stars
+        setScore(score + 10); // Increment score by 10 for stars
       }
 
       if (tile === 3 || tile === 4 || tile === 5 || tile === 6 || tile === 7 || tile === 8 || tile === 9 || tile === 10) {
-        setScore((prevScore) => prevScore + 30);
+        setScore(score + 10);
       }
 
       // Optionally, set the tile to 0 (empty) once the cat eats it
