@@ -42,6 +42,7 @@ const Game = () => {
   const [world, setWorld] = useState(initialWorld);
   const [rCat, setRCat] = useState({ x: 1, y: 1 });
   const [score, setScore] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
 
   const tileMap = {
     1: star1,
@@ -57,6 +58,8 @@ const Game = () => {
   };
 
   const handleKeyPress = (event) => {
+    if (gameOver) return;
+    
     const { x, y } = rCat;
     let newX = x;
     let newY = y;
@@ -68,6 +71,11 @@ const Game = () => {
 
     const tile = world[newY][newX];
 
+    if (tile === 11) {
+      setGameOver(true);
+      return;
+    }
+
     // Only move the cat if the new tile is not a wall (e.g., tile 3) or out of bounds
     if (tile !== 3) {
       setRCat({ x: newX, y: newY });
@@ -77,8 +85,12 @@ const Game = () => {
         setScore((prevScore) => prevScore + 10); // Increment score by 10 for stars
       }
 
+      if (tile === 3 || tile === 4 || tile === 5 || tile === 6 || tile === 7 || tile === 8 || tile === 9 || tile === 10) {
+        setScore((prevScore) => prevScore + 30);
+      }
+
       // Optionally, set the tile to 0 (empty) once the cat eats it
-      if (tile === 1 || tile === 2) {
+      if (tile === 1 || tile === 2 || tile === 3 || tile === 4 || tile === 5 || tile === 6 || tile === 7 || tile === 8 || tile === 9 || tile === 10) {
         const newWorld = [...world];
         newWorld[newY][newX] = 0; // Replace star with empty space
         setWorld(newWorld);
@@ -94,19 +106,19 @@ const Game = () => {
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [rCat, world]); // Dependencies to re-setup event listener when necessary
+  }, [rCat, world, gameOver]); // Dependencies to re-setup event listener when necessary
 
   const renderTile = (tile, rowIndex, colIndex) => {
     if (tile === 3) {
       return (
-        <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-gray-800" />
+        <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300" />
       );
     }
 
     const tileImage = tileMap[tile];
 
     return (
-      <div key={`${rowIndex}-${colIndex}`} className="w-4 h-3">
+      <div key={`${rowIndex}-${colIndex}`} className="w-4 h-3 flex justify-center items-center">
         {tileImage && (
           <Image
             src={tileImage}
@@ -127,9 +139,17 @@ const Game = () => {
 
   return (
     <div className="flex flex-col items-center space-y-4">
-      <div id="world" className="grid gap-1">
+      <div id="world" className="grid">
         {renderWorld()}
       </div>
+
+      {gameOver && (
+        <div className="absolute text-center text-white">
+          <h1>Game Over!</h1>
+          <p>Your final score is: {score}</p>
+        </div>
+      )}
+
       <div
         id="rCat"
         className="absolute"
