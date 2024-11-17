@@ -18,41 +18,44 @@ const Content = () => {
 
   return (
     <div className="relative h-[70vh] bg-cats-blue-100 flex items-center text-white">
-        <Image
+      {/* Background Images */}
+      <Image
         src={space}
-        alt="Space"
+        alt="Background Space Illustration"
         className="absolute right-0 bottom-0 w-[60%] overflow-hidden"
-        />
-        <Image src={starss} alt={starss} className="absolute opacity-60 right-0 bottom-0 w-screen overflow-hidden z-0"/>
+      />
+      <Image
+        src={starss}
+        alt="Background Stars Illustration"
+        className="absolute opacity-60 right-0 bottom-0 w-screen overflow-hidden z-0"
+      />
 
+      {/* Main Content */}
       <div className="grid grid-cols-2 px-[10vw] py-[6vh] gap-[10vw] z-10">
+        {/* Game Component */}
         <div>
           <Game score={score} setScore={setScore} />
         </div>
-        <div className='grid grid-rows-2'>
-          <div className='grid grid-cols-2 gap-[4vw]'>
-        {/* Info Section */}
+
+        {/* Information Section */}
         <div className="grid grid-rows-2">
+          {/* Score and Rocket Section */}
           <div className="grid grid-cols-2 gap-[4vw]">
+            {/* Score Display */}
             <div>
-              <div className='p-1 border-2 rounded-2xl border-cats-purple-300'>
-                <div className='flex flex-row border-4 border-cats-purple-300 rounded-2xl p-2'>
+              <div className="p-1 border-2 rounded-2xl border-cats-purple-300">
+                <div className="flex flex-row border-4 border-cats-purple-300 rounded-2xl p-2">
                   <p>
-                    LITTER <br/> CLEANED: 
+                    LITTER <br /> CLEANED:
                   </p>
-                  <div className='text-2xl self-center ml-16'>
-                    {score}
-                  </div>
+                  <div className="text-2xl self-center ml-16">{score}</div>
                 </div>
               </div>
             </div>
-            <div className='flex flex-col justify-center items-center text-center'>
-              <p className='-translate-y-8'>HELP PICK UP THE DEBRIS FROM THIS ROCKET!</p>
-              <Image src={rocket} alt={rocket} className='w-[6vw] -translate-y-6'/>
-          </div>
-            </div>
+
+            {/* Rocket Animation */}
             <div className="flex flex-col justify-center items-center text-center">
-              <p className="text-4xl -translate-y-4">
+              <p className="text-sm -translate-y-4">
                 HELP PICK UP THE DEBRIS FROM THIS ROCKET!
               </p>
               <motion.div
@@ -66,25 +69,11 @@ const Content = () => {
               >
                 <Image
                   src={rocket}
-                  alt="Rocket"
+                  alt="Rocket Illustration"
                   className="w-[6vw] translate-y-8"
                 />
               </motion.div>
             </div>
-          </div>
-          <div className="text-sm">
-            <p>
-              WHAT IS R’CAT’S GOAL ?
-              <br />
-              <br />
-              Planet Earth is not the only place with a litter issue. Beyond our atmosphere, 
-              in the expanse of the Milky Way Galaxy, there is already a significant amount of 
-              space waste or space debris. These space debris are fragments from rockets, satellites, 
-              and other creations that have been sent to space. The large issue with this, however, 
-              is that there have been instances of debris falling back through the atmosphere colliding 
-              into the ground. R’Cat aims to spread awareness about this pressing issue in hopes of 
-              inspiring people to take action, to prevent potential damage and larger issues.
-            </p>
           </div>
         </div>
       </div>
