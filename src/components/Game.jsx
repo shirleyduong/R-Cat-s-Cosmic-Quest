@@ -16,7 +16,7 @@ import star2 from "../../public/star2.svg"
 
 const initialWorld = [
     [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-    [3,0,2,1,3,2,1,1,2,1,1,1,2,11,1,1,1,3,2,1,1,3],
+    [3,12,2,1,3,2,1,1,2,1,1,1,2,11,1,1,1,3,2,1,1,3],
     [3,1,3,1,3,1,3,3,3,3,1,1,3,3,3,3,1,3,1,3,1,3],
     [3,1,1,2,1,1,1,1,3,1,1,2,1,3,1,1,2,1,1,1,2,3],
     [3,3,3,1,3,1,3,1,3,1,3,3,1,3,1,3,1,3,1,3,3,3],
@@ -54,12 +54,16 @@ const Game = ({ score, setScore }) => {
     9: rocket6,
     10: rocket7,
     11: asteroid,
+    12: catOpen,
+    13: catClosed,
   };
 
   const handleKeyPress = (event) => {
     if (gameOver) return;
 
     const { x, y } = rCat;
+    let oldX = x;
+    let oldY = y;
     let newX = x;
     let newY = y;
 
@@ -69,35 +73,29 @@ const Game = ({ score, setScore }) => {
     if (event.key === "ArrowRight") newX = Math.min(world[0].length - 1, x + 1); // Move right
 
     const tile = world[newY][newX];
-
+    
     if (tile === 11) {
       setGameOver(true);
       return;
     }
 
-    // Only move the cat if the new tile is not a wall (e.g., tile 3) or out of bounds
     if (tile !== 3) {
       setRCat({ x: newX, y: newY });
 
-      // Update score if the cat eats something (e.g., star)
-      if (tile === 1 || tile === 2) {
-        setScore(score + 10); // Increment score by 10 for stars
-      }
-
-      if (tile === 3 || tile === 4 || tile === 5 || tile === 6 || tile === 7 || tile === 8 || tile === 9 || tile === 10) {
+      if(tile === 1 || tile === 2){
         setScore(score + 10);
       }
 
-      // Optionally, set the tile to 0 (empty) once the cat eats it
-      if (tile === 1 || tile === 2 || tile === 3 || tile === 4 || tile === 5 || tile === 6 || tile === 7 || tile === 8 || tile === 9 || tile === 10) {
-        const newWorld = [...world];
-        newWorld[newY][newX] = 0; // Replace star with empty space
-        setWorld(newWorld);
+      if (tile >= 4 || tile <= 10) {
+        setScore(score + 30);
       }
+
+      world[oldY][oldX] = 0;
+      world[newY][newX] = 12;
+
     }
   };
 
-  // Add event listener for key press
   useEffect(() => {
     const onKeyDown = (event) => handleKeyPress(event);
     window.addEventListener("keydown", onKeyDown);
@@ -113,11 +111,13 @@ const Game = ({ score, setScore }) => {
         <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300" />
       );
     }
+    
 
     const tileImage = tileMap[tile];
 
     return (
-      <div key={`${rowIndex}-${colIndex}`} className="w-4 h-3 flex justify-center items-center">
+
+      <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 flex items-center justify-center">
         {tileImage && (
           <Image
             src={tileImage}
@@ -138,28 +138,8 @@ const Game = ({ score, setScore }) => {
 
   return (
     <div className="flex flex-col items-center space-y-4">
-      <div id="world" className="grid">
+      <div id="world">
         {renderWorld()}
-      </div>
-
-      {gameOver && (
-        <div className="absolute text-center text-white">
-          <h1>Game Over!</h1>
-          <p>Your final score is: {score}</p>
-        </div>
-      )}
-
-      <div
-        id="rCat"
-        className="absolute"
-        style={{
-          top: `${rCat.y * 20}px`,
-          left: `${rCat.x * 20}px`,
-          width: "20px",
-          height: "20px",
-        }}
-      >
-        <Image src={catOpen} alt="RCat" className="w-full h-full" />
       </div>
     </div>
   );
