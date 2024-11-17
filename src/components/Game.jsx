@@ -109,35 +109,30 @@ const Game = ({ score, setScore }) => {
     if (tile === 3) {
         if(rowIndex === 0 && colIndex === 0){
             return (
-                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300 rounded-tl" />
+                <div key={`${rowIndex}-${colIndex}`} className="w-[1.5rem] h-[1.5rem] bg-cats-purple-300 rounded-tl" />
             );
         }else if(rowIndex === 0 && colIndex === 21){
             return (
-                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300 rounded-tr" />
+                <div key={`${rowIndex}-${colIndex}`} className="w-[1.5rem] h-[1.5rem] bg-cats-purple-300 rounded-tr" />
             );
         }else if(rowIndex === 20 && colIndex === 0){
             return (
-                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300 rounded-bl" />
+                <div key={`${rowIndex}-${colIndex}`} className="w-[1.5rem] h-[1.5rem] bg-cats-purple-300 rounded-bl" />
             );
         }else if(rowIndex === 20 && colIndex === 21){
             return (
-                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300 rounded-br" />
+                <div key={`${rowIndex}-${colIndex}`} className="w-[1.5rem] h-[1.5rem] bg-cats-purple-300 rounded-br" />
             );
         }
         else{
             return (
-                <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 bg-cats-purple-300" />
+                <div key={`${rowIndex}-${colIndex}`} className="w-[1.5rem] h-[1.5rem] bg-cats-purple-300" />
               );
         }
-      
     }
-    
-
     const tileImage = tileMap[tile];
-
     return (
-
-      <div key={`${rowIndex}-${colIndex}`} className="w-4 h-4 flex items-center justify-center">
+      <div key={`${rowIndex}-${colIndex}`} className="w-[1.5rem] h-[1.5rem] flex items-center justify-center">
         {tileImage && (
           <Image
             src={tileImage}
